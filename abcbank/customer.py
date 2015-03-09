@@ -1,4 +1,4 @@
-from account import CHECKING, SAVINGS, MAXI_SAVINGS
+from abcbank.account import CHECKING, SAVINGS, MAXI_SAVINGS
 
 
 class Customer:
@@ -7,20 +7,20 @@ class Customer:
         self.accounts = []
 
     def openAccount(self, account):
+        #opens an account for customer
         self.accounts.append(account)
         return self
 
     def numAccs(self):
+        #this returns the number of accounts
         return len(self.accounts)
 
     def totalInterestEarned(self):
+        #Returns the total interest earned across all acounts
         return sum([a.interestEarned() for a in self.accounts])
-
-    # This method gets a statement
+    
     def getStatement(self):
-        # JIRA-123 Change by Joe Bloggs 29/7/1988 start
-        statement = None  # reset statement to null here
-        # JIRA-123 Change by Joe Bloggs 29/7/1988 end
+    # This method gets a statement
         totalAcrossAllAccounts = sum([a.sumTransactions() for a in self.accounts])
         statement = "Statement for %s" % self.name
         for account in self.accounts:
@@ -29,6 +29,7 @@ class Customer:
         return statement
 
     def statementForAccount(self, account):
+        # This puts the statement in a human readable format.
         accountType = "\n\n\n"
         if account.accountType == CHECKING:
             accountType = "\n\nChecking Account\n"
@@ -38,11 +39,13 @@ class Customer:
             accountType = "\n\nMaxi Savings Account\n"
         transactionSummary = [self.withdrawalOrDepositText(t) + " " + _toDollars(abs(t.amount))
                               for t in account.transactions]
-        transactionSummary = "  " + "\n  ".join(transactionSummary) + "\n"
-        totalSummary = "Total " + _toDollars(sum([t.amount for t in account.transactions]))
-        return accountType + transactionSummary + totalSummary
+        joinedTransactionSummary = "  " + "\n  ".join(transactionSummary) + "\n"
+        self.balance = sum([t.amount for t in account.transactions])
+        totalSummary = "Total " + _toDollars(self.balance)
+        return accountType + joinedTransactionSummary + totalSummary
 
     def withdrawalOrDepositText(self, transaction):
+        #returns proper text for if a transaction was a withdrawal or deposit 
         if transaction.amount < 0:
             return "withdrawal"
         elif transaction.amount > 0:
@@ -52,4 +55,5 @@ class Customer:
 
 
 def _toDollars(number):
+    #returns float value to dollars. 
     return "${:1.2f}".format(number)

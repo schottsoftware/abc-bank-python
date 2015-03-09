@@ -1,0 +1,4 @@
+{"maxi":[{"rate":0.02,"breakpoint":1000.00,"frequency":365},{"rate":0.05,"breakpoint":2000.00},{"rate":0.1,"breakpoint":0}],
+"savings":[{"rate":0.001,"breakpoint":1000.00,"frequency":365},{"rate":0.002}],
+"checking":[{"frequency":365,"rate":0.001}]
+}

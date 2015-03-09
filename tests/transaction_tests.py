@@ -1,6 +1,5 @@
 from nose.tools import assert_is_instance
-
-from transaction import Transaction
+from abcbank.transaction import Transaction
 
 
 def test_type():
